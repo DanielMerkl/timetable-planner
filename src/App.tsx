@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { AUTH, TIMETABLE } from "./utils/routes";
+import TimetablePage from "./pages/TimetablePage";
+import AuthPage from "./pages/AuthPage";
+import Snackbar from "./components/Snackbar";
+
+const App: FC = () => (
+  <>
+    <Switch>
+      <Route path={TIMETABLE} component={TimetablePage} />
+      <Route path={AUTH} component={AuthPage} />
+      <Redirect to={TIMETABLE} />
+    </Switch>
+    <Snackbar />
+  </>
+);
 
 export default App;
