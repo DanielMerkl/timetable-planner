@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from "react";
+import React, { createContext, FC, useEffect, useState } from "react";
 import firebase from "../utils/firebase";
 
 interface Context {
@@ -17,6 +17,16 @@ export const AuthContext = createContext<Context>({
 
 export const AuthContextProvider: FC = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      setIsLoggedIn(user !== null);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleRegister = async (email: string, password: string) => {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
