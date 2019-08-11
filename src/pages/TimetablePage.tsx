@@ -22,38 +22,36 @@ const TimetablePage: FC = () => {
   }
 
   return (
-    <>
-      <div
-        style={{
-          transition: "all 200ms ease-out",
-          width: appWidth,
-          marginLeft: marginLeft
-        }}
-      >
-        <ApplicationBar
-          moduleSelectionOpen={moduleSelectionOpen}
-          setModuleSelectionOpen={setModuleSelectionOpen}
-        />
-        <CalendarActions
-          openSaveTimetableDialog={() => setSaveDialogOpen(true)}
-          openLoadTimetableDialog={() => setLoadDialogOpen(true)}
-        />
-        <Calendar />
-        <ModuleSelection
-          open={moduleSelectionOpen}
-          setModuleSelectionOpen={setModuleSelectionOpen}
-        />
-        <LectureInformationDialog />
-        <SaveTimetableDialog
-          open={saveDialogOpen}
-          closeDialog={() => setSaveDialogOpen(false)}
-        />
-        <LoadTimetableDialog
-          open={loadDialogOpen}
-          closeDialog={() => setLoadDialogOpen(false)}
-        />
-      </div>
-    </>
+    <div
+      style={{
+        transition: "all 200ms ease-out",
+        width: appWidth,
+        marginLeft: marginLeft
+      }}
+    >
+      <ApplicationBar
+        moduleSelectionOpen={moduleSelectionOpen}
+        setModuleSelectionOpen={setModuleSelectionOpen}
+      />
+      <CalendarActions
+        openSaveTimetableDialog={() => setSaveDialogOpen(true)}
+        openLoadTimetableDialog={() => setLoadDialogOpen(true)}
+      />
+      <Calendar />
+      <ModuleSelection
+        open={moduleSelectionOpen}
+        setModuleSelectionOpen={setModuleSelectionOpen}
+      />
+      <LectureInformationDialog />
+      <SaveTimetableDialog
+        open={saveDialogOpen}
+        closeDialog={() => setSaveDialogOpen(false)}
+      />
+      <LoadTimetableDialog
+        open={loadDialogOpen}
+        closeDialog={() => setLoadDialogOpen(false)}
+      />
+    </div>
   );
 };
 

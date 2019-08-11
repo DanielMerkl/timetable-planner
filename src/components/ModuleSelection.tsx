@@ -13,9 +13,9 @@ import { makeStyles } from "@material-ui/styles";
 import CourseListItem from "./ListItems/CourseListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { AppActions, AppState } from "../store/store";
-import Api from "../utils/Api";
 import { updateCoursesAction } from "../store/courses/coursesActions";
 import { Dispatch } from "redux";
+import { fakeCoursesData } from "../utils/fakeCoursesData";
 
 interface Props {
   open: boolean;
@@ -31,15 +31,11 @@ const ModuleSelection: FC<Props> = ({ open, setModuleSelectionOpen }) => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        const courses = await Api.fetchCourses();
-        dispatch(updateCoursesAction(courses));
-      } catch (e) {
-        console.error(e);
-      } finally {
+      setLoading(true);
+      setTimeout(() => {
+        dispatch(updateCoursesAction(fakeCoursesData));
         setLoading(false);
-      }
+      }, 150);
     };
 
     fetchCourses();
