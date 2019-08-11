@@ -79,17 +79,15 @@ const AuthForm: FC = () => {
       switch (e.code) {
         case "auth/user-disabled":
           setEmailError(true);
-          dispatch(openSnackbarAction("Email-Adresse ist gesperrt"));
+          dispatch(openSnackbarAction("Dieser Account ist gesperrt."));
           break;
         case "auth/invalid-email":
           setEmailError(true);
-          dispatch(openSnackbarAction("Email-Adresse ist ungültig"));
+          dispatch(openSnackbarAction("Email-Adresse ist ungültig."));
           break;
         case "auth/wrong-password":
           setPasswordError(true);
-          dispatch(
-            openSnackbarAction("Passwort muss mindestens 6 Zeichen lang sein.")
-          );
+          dispatch(openSnackbarAction("Passwort ist ungültig."));
           break;
         case "auth/user-not-found":
           setEmailError(true);
@@ -118,7 +116,7 @@ const AuthForm: FC = () => {
           break;
         case "auth/invalid-email":
           setEmailError(true);
-          dispatch(openSnackbarAction("Email-Adresse ist ungültig"));
+          dispatch(openSnackbarAction("Email-Adresse ist ungültig."));
           break;
         case "auth/weak-password":
           setPasswordError(true);
