@@ -11,6 +11,9 @@ import { store } from "./store/store";
 import theme from "./utils/theme";
 import App from "./App";
 import { AuthContextProvider } from "./context/AuthContext";
+import { initializeFirebase } from "./utils/initializeFirebase";
+
+initializeFirebase();
 
 ReactDOM.render(
   <Provider store={store}>
