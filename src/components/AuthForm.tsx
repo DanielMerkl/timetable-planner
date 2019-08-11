@@ -1,4 +1,10 @@
-import React, { FC, KeyboardEvent, useContext, useState } from "react";
+import React, {
+  Dispatch,
+  FC,
+  KeyboardEvent,
+  useContext,
+  useState
+} from "react";
 
 import {
   Button,
@@ -13,7 +19,9 @@ import useReactRouter from "use-react-router";
 import { TIMETABLE } from "../utils/routes";
 import Api from "../utils/Api";
 import { AuthContext } from "../context/AuthContext";
-import { SnackbarContext } from "../context/SnackbarContext";
+import { useDispatch } from "react-redux";
+import { AppActions } from "../store/store";
+import { openSnackbarAction } from "../store/snackbar/snackbarActions";
 
 enum TabValues {
   LOGIN,
@@ -21,9 +29,9 @@ enum TabValues {
 }
 
 const AuthForm: FC = () => {
+  const dispatch = useDispatch<Dispatch<AppActions>>();
   const styles = useStyles();
   const { login } = useContext(AuthContext);
-  const { showSnackbar } = useContext(SnackbarContext);
   const { history } = useReactRouter();
 
   const [tabValue, setTabValue] = useState<TabValues>(TabValues.LOGIN);
@@ -53,13 +61,13 @@ const AuthForm: FC = () => {
     try {
       setLoading(true);
       const { token, userId } = await Api.login(email, password);
-      showSnackbar("Login war erfolgreich.");
+      dispatch(openSnackbarAction("Login war erfolgreich."));
       setLoading(false);
       login(token, userId);
       history.push(TIMETABLE);
     } catch (e) {
       console.error(e);
-      showSnackbar(e);
+      dispatch(openSnackbarAction(e));
       setLoading(false);
     }
   };
@@ -68,13 +76,13 @@ const AuthForm: FC = () => {
     try {
       setLoading(true);
       const { token, userId } = await Api.register(email, password);
-      showSnackbar("Registrierung war erfolgreich.");
+      dispatch(openSnackbarAction("Registrierung war erfolgreich."));
       setLoading(false);
       login(token, userId);
       history.push(TIMETABLE);
     } catch (e) {
       console.error(e);
-      showSnackbar(e);
+      dispatch(openSnackbarAction(e));
       setLoading(false);
     }
   };

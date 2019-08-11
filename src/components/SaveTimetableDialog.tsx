@@ -1,4 +1,4 @@
-import React, { FC, KeyboardEvent, useContext, useState } from "react";
+import React, { Dispatch, FC, KeyboardEvent, useState } from "react";
 
 import {
   Button,
@@ -12,12 +12,11 @@ import {
 import { makeStyles } from "@material-ui/styles";
 
 import { toTimetable } from "../utils/toTimetable";
-import Api from "../utils/Api";
 import { Timetable } from "../types/interfaces/Timetable";
-import { SnackbarContext } from "../context/SnackbarContext";
-import { useSelector } from "react-redux";
-import { AppState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppActions, AppState } from "../store/store";
 import { createTimetable } from "../utils/timetableUtils";
+import { openSnackbarAction } from "../store/snackbar/snackbarActions";
 
 interface Props {
   open: boolean;
@@ -26,7 +25,7 @@ interface Props {
 
 const SaveTimetableDialog: FC<Props> = ({ open, closeDialog }) => {
   const styles = useStyles();
-  const { showSnackbar } = useContext(SnackbarContext);
+  const dispatch = useDispatch<Dispatch<AppActions>>();
   const [timetableName, setTimetableName] = useState("");
   const [loading, setLoading] = useState(false);
   const courses = useSelector((state: AppState) => state.courses.courses);
@@ -52,9 +51,9 @@ const SaveTimetableDialog: FC<Props> = ({ open, closeDialog }) => {
     setTimeout(() => {
       const newTimetable: Timetable = toTimetable(timetableName, courses);
       createTimetable(newTimetable);
-      showSnackbar(
-        `Stundenplan "${timetableName}" wurde erfolgreich gespeichert.`
-      );
+
+      const message = `Stundenplan "${timetableName}" wurde erfolgreich gespeichert.`;
+      dispatch(openSnackbarAction(message));
       setTimetableName("");
       closeDialog();
       setLoading(false);

@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import React, { Dispatch, FC, useContext, useState } from "react";
 import useReactRouter from "use-react-router";
 
 import {
@@ -19,7 +19,9 @@ import { makeStyles } from "@material-ui/styles";
 import { AUTH, TIMETABLE } from "../utils/routes";
 import Api from "../utils/Api";
 import { AuthContext } from "../context/AuthContext";
-import { SnackbarContext } from "../context/SnackbarContext";
+import { useDispatch } from "react-redux";
+import { AppActions } from "../store/store";
+import { openSnackbarAction } from "../store/snackbar/snackbarActions";
 
 interface Props {
   moduleSelectionOpen?: boolean;
@@ -31,8 +33,8 @@ const ApplicationBar: FC<Props> = ({
   setModuleSelectionOpen
 }) => {
   const styles = useStyles();
+  const dispatch = useDispatch<Dispatch<AppActions>>();
   const { isLoggedIn, logout } = useContext(AuthContext);
-  const { showSnackbar } = useContext(SnackbarContext);
   const { history, location } = useReactRouter();
 
   const [loading, setLoading] = useState(false);
@@ -53,7 +55,7 @@ const ApplicationBar: FC<Props> = ({
       console.error(e);
     } finally {
       logout();
-      showSnackbar("Logout war erfolgreich.");
+      dispatch(openSnackbarAction("Logout war erfolgreich."));
       setLoading(false);
     }
   };

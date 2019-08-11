@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -20,14 +20,8 @@ import { makeStyles } from "@material-ui/styles";
 import { DeleteOutline } from "@material-ui/icons";
 
 import { Timetable } from "../types/interfaces/Timetable";
-import Api from "../utils/Api";
 import { loadTimetableAction } from "../store/courses/coursesActions";
-import { SnackbarContext } from "../context/SnackbarContext";
-import {
-  createTimetable,
-  deleteTimetable,
-  getTimetables
-} from "../utils/timetableUtils";
+import { deleteTimetable, getTimetables } from "../utils/timetableUtils";
 
 interface Props {
   open: boolean;
@@ -37,7 +31,6 @@ interface Props {
 const LoadTimetableDialog: FC<Props> = ({ open, closeDialog }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { showSnackbar } = useContext(SnackbarContext);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [timetables, setTimetables] = useState<Array<Timetable>>([]);
   const [loadingTimetables, setLoadingTimetables] = useState(false);
@@ -50,11 +43,11 @@ const LoadTimetableDialog: FC<Props> = ({ open, closeDialog }) => {
   //     setTimetables(savedTimetables);
   //   } catch (e) {
   //     console.error(e);
-  //     showSnackbar(e);
+  //     dispatch(openSnackbarAction(e));
   //   } finally {
   //     setLoadingTimetables(false);
   //   }
-  // }, [showSnackbar]);
+  // }, [dispatch]);
 
   const fetchTimetables = () => {
     console.log("fetching timetables");

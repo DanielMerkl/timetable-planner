@@ -1,10 +1,14 @@
-import React, { FC, useContext } from "react";
+import React, { Dispatch, FC } from "react";
 
 import MuiSnackbar from "@material-ui/core/Snackbar";
-import { SnackbarContext } from "../context/SnackbarContext";
+import { useDispatch, useSelector } from "react-redux";
+import { AppActions, AppState } from "../store/store";
+import { closeSnackbarAction } from "../store/snackbar/snackbarActions";
 
 export const Snackbar: FC = () => {
-  const { open, message, hideSnackbar } = useContext(SnackbarContext);
+  const dispatch = useDispatch<Dispatch<AppActions>>();
+  const open = useSelector((s: AppState) => s.snackbar.open);
+  const message = useSelector((s: AppState) => s.snackbar.message);
 
   return (
     <MuiSnackbar
@@ -14,7 +18,7 @@ export const Snackbar: FC = () => {
       }}
       open={open}
       autoHideDuration={5000}
-      onClose={hideSnackbar}
+      onClose={() => dispatch(closeSnackbarAction())}
       message={<span>{message}</span>}
     />
   );
