@@ -15,13 +15,12 @@ import {
   TextField
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import useReactRouter from "use-react-router";
-import { TIMETABLE } from "../utils/routes";
-import Api from "../utils/Api";
 import { AuthContext } from "../context/AuthContext";
 import { useDispatch } from "react-redux";
 import { AppActions } from "../store/store";
 import { openSnackbarAction } from "../store/snackbar/snackbarActions";
+import routes from "../utils/routes";
+import { Redirect } from "react-router";
 
 enum TabValues {
   LOGIN,
@@ -31,13 +30,28 @@ enum TabValues {
 const AuthForm: FC = () => {
   const dispatch = useDispatch<Dispatch<AppActions>>();
   const styles = useStyles();
-  const { login } = useContext(AuthContext);
-  const { history } = useReactRouter();
+  const { isLoggedIn, register, login } = useContext(AuthContext);
 
   const [tabValue, setTabValue] = useState<TabValues>(TabValues.LOGIN);
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoggedIn && !isLoading) {
+    return <Redirect to={routes.TIMETABLE} />;
+  }
+
+  const handleEmailChange = (newValue: string) => {
+    setEmailError(false);
+    setEmail(newValue);
+  };
+
+  const handlePasswordChange = (newValue: string) => {
+    setPasswordError(false);
+    setPassword(newValue);
+  };
 
   const handleButtonClick = () => {
     if (tabValue === TabValues.LOGIN) {
@@ -48,7 +62,7 @@ const AuthForm: FC = () => {
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {
-    if (event.key === "Enter" && email && password) {
+    if (event.key === "Enter" && !!email && !!password) {
       if (tabValue === TabValues.LOGIN) {
         tryLogin();
       } else {
@@ -59,31 +73,63 @@ const AuthForm: FC = () => {
 
   const tryLogin = async () => {
     try {
-      setLoading(true);
-      const { token, userId } = await Api.login(email, password);
-      dispatch(openSnackbarAction("Login war erfolgreich."));
-      setLoading(false);
-      login(token, userId);
-      history.push(TIMETABLE);
+      setIsLoading(true);
+      await login(email, password);
     } catch (e) {
+      switch (e.code) {
+        case "auth/user-disabled":
+          setEmailError(true);
+          dispatch(openSnackbarAction("Email-Adresse ist gesperrt"));
+          break;
+        case "auth/invalid-email":
+          setEmailError(true);
+          dispatch(openSnackbarAction("Email-Adresse ist ungültig"));
+          break;
+        case "auth/wrong-password":
+          setPasswordError(true);
+          dispatch(
+            openSnackbarAction("Passwort muss mindestens 6 Zeichen lang sein.")
+          );
+          break;
+        case "auth/user-not-found":
+          setEmailError(true);
+          dispatch(
+            openSnackbarAction(
+              "Es existiert kein Account mit dieser Email-Adresse."
+            )
+          );
+          break;
+      }
       console.error(e);
-      dispatch(openSnackbarAction(e));
-      setLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const tryRegister = async () => {
     try {
-      setLoading(true);
-      const { token, userId } = await Api.register(email, password);
-      dispatch(openSnackbarAction("Registrierung war erfolgreich."));
-      setLoading(false);
-      login(token, userId);
-      history.push(TIMETABLE);
+      setIsLoading(true);
+      register(email, password);
     } catch (e) {
+      switch (e.code) {
+        case "auth/email-already-in-use":
+          setEmailError(true);
+          dispatch(openSnackbarAction("Email-Adresse ist bereits vergeben."));
+          break;
+        case "auth/invalid-email":
+          setEmailError(true);
+          dispatch(openSnackbarAction("Email-Adresse ist ungültig"));
+          break;
+        case "auth/weak-password":
+          setPasswordError(true);
+          dispatch(
+            openSnackbarAction("Passwort muss mindestens 6 Zeichen lang sein.")
+          );
+          break;
+      }
       console.error(e);
-      dispatch(openSnackbarAction(e));
-      setLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,7 +154,8 @@ const AuthForm: FC = () => {
           variant="outlined"
           label="E-Mail"
           value={email}
-          onChange={event => setEmail(event.target.value)}
+          error={emailError}
+          onChange={event => handleEmailChange(event.target.value)}
           autoFocus
           onKeyPress={handleKeyPress}
         />
@@ -117,18 +164,19 @@ const AuthForm: FC = () => {
           label="Passwort"
           type="password"
           value={password}
-          onChange={event => setPassword(event.target.value)}
+          error={passwordError}
+          onChange={event => handlePasswordChange(event.target.value)}
           onKeyPress={handleKeyPress}
         />
         <Button
-          disabled={!email || !password || loading}
+          disabled={!email || !password || isLoading}
           className={styles.button}
           variant="contained"
           color="primary"
           fullWidth
           onClick={handleButtonClick}
         >
-          {loading ? (
+          {isLoading ? (
             <CircularProgress size={24} />
           ) : (
             <>{tabValue === TabValues.LOGIN ? "Einloggen" : "Registrieren"}</>

@@ -16,12 +16,11 @@ import {
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
-import { AUTH, TIMETABLE } from "../utils/routes";
-import Api from "../utils/Api";
 import { AuthContext } from "../context/AuthContext";
 import { useDispatch } from "react-redux";
 import { AppActions } from "../store/store";
 import { openSnackbarAction } from "../store/snackbar/snackbarActions";
+import routes from "../utils/routes";
 
 interface Props {
   moduleSelectionOpen?: boolean;
@@ -44,18 +43,17 @@ const ApplicationBar: FC<Props> = ({
   };
 
   const handleLoginClick = () => {
-    history.push(AUTH);
+    history.push(routes.AUTH);
   };
 
   const handleLogoutClick = async () => {
     try {
       setLoading(true);
-      await Api.logout();
+      await logout();
+      dispatch(openSnackbarAction("Logout war erfolgreich."));
     } catch (e) {
       console.error(e);
     } finally {
-      logout();
-      dispatch(openSnackbarAction("Logout war erfolgreich."));
       setLoading(false);
     }
   };
@@ -64,7 +62,7 @@ const ApplicationBar: FC<Props> = ({
     <AppBar position="static">
       <Toolbar variant="dense">
         <div className={styles.gridWrapper}>
-          {location.pathname === TIMETABLE ? (
+          {location.pathname === routes.TIMETABLE ? (
             <div>
               <Button color="inherit" onClick={handleModuleClick}>
                 <ViewList className={styles.icon} />
@@ -72,7 +70,10 @@ const ApplicationBar: FC<Props> = ({
               </Button>
             </div>
           ) : (
-            <Button color="inherit" onClick={() => history.push(TIMETABLE)}>
+            <Button
+              color="inherit"
+              onClick={() => history.push(routes.TIMETABLE)}
+            >
               <CalendarToday className={styles.icon} fontSize="small" />
               Stundenplan
             </Button>
@@ -84,7 +85,7 @@ const ApplicationBar: FC<Props> = ({
           >
             Stundenplaner
           </Typography>
-          {location.pathname === TIMETABLE &&
+          {location.pathname === routes.TIMETABLE &&
             (!isLoggedIn ? (
               <div className={styles.buttonWrapper}>
                 <Button color="inherit" onClick={handleLoginClick}>

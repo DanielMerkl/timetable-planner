@@ -1,14 +1,16 @@
-import React, { createContext, FC, useEffect, useState } from "react";
-import authUtils from "../utils/authUtils";
+import React, { createContext, FC, useState } from "react";
+import firebase from "../utils/firebase";
 
 interface Context {
   isLoggedIn: boolean;
-  login: (token: string, userId: number) => void;
+  register: (email: string, password: string) => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
 }
 
 export const AuthContext = createContext<Context>({
   isLoggedIn: false,
+  register: () => {},
   login: () => {},
   logout: () => {}
 });
@@ -16,22 +18,18 @@ export const AuthContext = createContext<Context>({
 export const AuthContextProvider: FC = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const token = authUtils.getToken();
-    const userId = authUtils.getUserId();
-    if (token && userId !== -1) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogin = (token: string, userId: number) => {
-    authUtils.setToken(token);
-    authUtils.setUserId(userId);
+  const handleRegister = async (email: string, password: string) => {
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
     setIsLoggedIn(true);
   };
 
-  const handleLogout = () => {
-    authUtils.clearStorage();
+  const handleLogin = async (email: string, password: string) => {
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = async () => {
+    await firebase.auth().signOut();
     setIsLoggedIn(false);
   };
 
@@ -39,6 +37,7 @@ export const AuthContextProvider: FC = ({ children }) => {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
+        register: handleRegister,
         login: handleLogin,
         logout: handleLogout
       }}
