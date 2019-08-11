@@ -10,15 +10,15 @@ import "./index.css";
 import { store } from "./store/store";
 import theme from "./utils/theme";
 import App from "./App";
-import CombinedAppContext from "./context/CombinedAppContext";
+import { AuthContextProvider } from "./context/AuthContext";
 
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <CombinedAppContext>
+        <AuthContextProvider>
           <App />
-        </CombinedAppContext>
+        </AuthContextProvider>
       </BrowserRouter>
     </ThemeProvider>
   </Provider>,

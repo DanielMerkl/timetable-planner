@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -12,11 +12,11 @@ import { InfoOutlined } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
 import { Lecture } from "../../types/interfaces/Lecture";
-import { InformationDialogContext } from "../../context/InformationDialogContext";
 import {
   updateCoursesWithIdAction,
   updateHoveredEventAction
 } from "../../store/courses/coursesActions";
+import { openInformationDialogAction } from "../../store/informationDialog/informationDialogActions";
 
 interface Props {
   lecture: Lecture;
@@ -25,7 +25,6 @@ interface Props {
 const LectureListItem: FC<Props> = ({ lecture }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { showInformationDialog } = useContext(InformationDialogContext);
 
   const handleListItemClick = () => {
     dispatch(updateCoursesWithIdAction(lecture.id));
@@ -34,7 +33,7 @@ const LectureListItem: FC<Props> = ({ lecture }) => {
 
   const handleInformationIconClick = () => {
     dispatch(updateHoveredEventAction(-1));
-    showInformationDialog(lecture);
+    dispatch(openInformationDialogAction(lecture));
   };
 
   const handleMouseEnter = () => {

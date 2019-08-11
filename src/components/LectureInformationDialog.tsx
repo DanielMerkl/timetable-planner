@@ -1,22 +1,26 @@
-import React, { FC, useContext } from "react";
+import React, { Dispatch, FC } from "react";
 import moment from "moment";
 
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
+  DialogTitle,
   Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import { toWeekdayString } from "../utils/toWeekdayString";
 import { isPractice } from "../types/interfaces/Practice";
-import { InformationDialogContext } from "../context/InformationDialogContext";
+import { useDispatch, useSelector } from "react-redux";
+import { AppActions, AppState } from "../store/store";
+import { closeInformationDialogAction } from "../store/informationDialog/informationDialogActions";
 
 const LectureInformationDialog: FC = () => {
   const styles = useStyles();
-  const { open, dialogContent, hideInformationDialog } = useContext(
-    InformationDialogContext
+  const dispatch = useDispatch<Dispatch<AppActions>>();
+  const open = useSelector((s: AppState) => s.informationDialog.open);
+  const dialogContent = useSelector(
+    (s: AppState) => s.informationDialog.dialogContent
   );
   const { fullname, weekday, start, end, room, professor } = dialogContent;
 
@@ -25,7 +29,10 @@ const LectureInformationDialog: FC = () => {
   const timeString = `${startString} - ${endString} Uhr`;
 
   return (
-    <Dialog open={open} onClose={hideInformationDialog}>
+    <Dialog
+      open={open}
+      onClose={() => dispatch(closeInformationDialogAction())}
+    >
       <DialogTitle>{fullname}</DialogTitle>
       <DialogContent>
         <div className={styles.contentGridWrapper}>
