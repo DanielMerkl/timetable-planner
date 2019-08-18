@@ -154,7 +154,7 @@ export const fakeCoursesData: Array<Course> = [
             ],
             practices: [
               {
-                id: 13,
+                id: 14,
                 group: 1,
                 fullname: "Programmieren II Übung",
                 shortname: "Prog II Ü",
@@ -208,7 +208,7 @@ export const fakeCoursesData: Array<Course> = [
             name: "Theoretische Informatik",
             lectures: [
               {
-                id: 14,
+                id: 26,
                 fullname: "Theoretische Informatik",
                 shortname: "TI",
                 professor: "Kröner",
