@@ -15,8 +15,8 @@ import { toTimetable } from "../utils/toTimetable";
 import { Timetable } from "../types/interfaces/Timetable";
 import { useDispatch, useSelector } from "react-redux";
 import { AppActions, AppState } from "../store/store";
-import { createTimetable } from "../utils/timetableUtils";
 import { openSnackbarAction } from "../store/snackbar/snackbarActions";
+import Api from "../utils/Api";
 
 interface Props {
   open: boolean;
@@ -30,34 +30,21 @@ const SaveTimetableDialog: FC<Props> = ({ open, closeDialog }) => {
   const [loading, setLoading] = useState(false);
   const courses = useSelector((state: AppState) => state.courses.courses);
 
-  // const handleSaveTimetable = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const timetable: Timetable = toTimetable(timetableName, courses);
-  //     await Api.addTimetable(timetable);
-  //     showSnackbar("Stundenplan wurde erfolgreich gespeichert.");
-  //     closeDialog();
-  //     setTimetableName("");
-  //   } catch (e) {
-  //     console.error(e);
-  //     showSnackbar(e);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  const handleSaveTimetable = () => {
-    setLoading(true);
-    setTimeout(() => {
-      const newTimetable: Timetable = toTimetable(timetableName, courses);
-      createTimetable(newTimetable);
-
-      const message = `Stundenplan "${timetableName}" wurde erfolgreich gespeichert.`;
-      dispatch(openSnackbarAction(message));
-      setTimetableName("");
+  const handleSaveTimetable = async () => {
+    try {
+      setLoading(true);
+      const timetable: Timetable = toTimetable(timetableName, courses);
+      await Api.saveTimetable(timetable);
+      dispatch(
+        openSnackbarAction("Stundenplan wurde erfolgreich gespeichert.")
+      );
       closeDialog();
+      setTimetableName("");
+    } catch (e) {
+      dispatch(openSnackbarAction(e));
+    } finally {
       setLoading(false);
-    }, 250);
+    }
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {

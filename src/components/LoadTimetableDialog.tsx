@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -21,7 +21,8 @@ import { DeleteOutline } from "@material-ui/icons";
 
 import { Timetable } from "../types/interfaces/Timetable";
 import { loadTimetableAction } from "../store/courses/coursesActions";
-import { deleteTimetable, getTimetables } from "../utils/timetableUtils";
+import Api from "../utils/Api";
+import { openSnackbarAction } from "../store/snackbar/snackbarActions";
 
 interface Props {
   open: boolean;
@@ -36,63 +37,39 @@ const LoadTimetableDialog: FC<Props> = ({ open, closeDialog }) => {
   const [loadingTimetables, setLoadingTimetables] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
-  // const fetchTimetables = useCallback(async () => {
-  //   try {
-  //     setLoadingTimetables(true);
-  //     const savedTimetables = await Api.fetchTimetables();
-  //     setTimetables(savedTimetables);
-  //   } catch (e) {
-  //     console.error(e);
-  //     dispatch(openSnackbarAction(e));
-  //   } finally {
-  //     setLoadingTimetables(false);
-  //   }
-  // }, [dispatch]);
-
-  const fetchTimetables = () => {
-    console.log("fetching timetables");
-    setLoadingTimetables(true);
-    setTimeout(() => {
-      const timetables = getTimetables();
-      setTimetables(timetables);
+  const fetchTimetables = useCallback(async () => {
+    try {
+      setLoadingTimetables(true);
+      const savedTimetables = await Api.fetchTimetables();
+      setTimetables(savedTimetables);
+    } catch (e) {
+      dispatch(openSnackbarAction(e));
+    } finally {
       setLoadingTimetables(false);
-    }, 250);
-  };
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (open) {
       fetchTimetables();
     }
-  }, [open]);
+  }, [open, fetchTimetables]);
 
   const handleLoadButtonClick = () => {
     dispatch(loadTimetableAction(timetables[selectedIndex]));
     closeDialog();
   };
 
-  // const handleDelete = async (timetable: Timetable) => {
-  //   try {
-  //     setLoadingDelete(true);
-  //     await Api.deleteTimetable(timetable.id);
-  //     showSnackbar(
-  //       `Stundenplan "${timetable.name}" wurde erfolgreich gelöscht.`
-  //     );
-  //     fetchTimetables();
-  //   } catch (e) {
-  //     console.error(e);
-  //     showSnackbar(e);
-  //   } finally {
-  //     setLoadingDelete(false);
-  //   }
-  // };
-
-  const handleDelete = (timetableToDelete: Timetable) => {
-    setLoadingDelete(true);
-    setTimeout(() => {
-      deleteTimetable(timetableToDelete);
-      setLoadingDelete(false);
+  const handleDelete = async (timetableToDelete: Timetable) => {
+    try {
+      setLoadingDelete(true);
+      await Api.deleteTimetable(timetableToDelete);
       fetchTimetables();
-    }, 250);
+    } catch (e) {
+      dispatch(openSnackbarAction(e));
+    } finally {
+      setLoadingDelete(false);
+    }
   };
 
   return (

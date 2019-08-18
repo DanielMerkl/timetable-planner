@@ -28,5 +28,5 @@ export const toTimetable = (
     });
   });
 
-  return { id: -1, name, lectures, practices };
+  return { id: "", name, lectures, practices };
 };

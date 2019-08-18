@@ -1,8 +1,10 @@
 import { Course } from "../types/interfaces/Course";
+import { time } from "./time";
+import { Weekday } from "../types/enums/Weekday";
 
 export const fakeOptimalCourses: Array<Course> = [
   {
-    id: 7,
+    id: 1,
     name: "Bachelor Informatik",
     semesters: [
       {
@@ -11,7 +13,7 @@ export const fakeOptimalCourses: Array<Course> = [
         modules: []
       },
       {
-        id: 2,
+        id: 44,
         number: 2,
         modules: [
           {
@@ -24,47 +26,47 @@ export const fakeOptimalCourses: Array<Course> = [
                 shortname: "SE",
                 professor: "Riedhammer",
                 room: "HQ007",
-                start: new Date("2019-03-11T08:00:00"),
-                end: new Date("2019-03-11T09:30:00"),
-                weekday: 1,
+                start: time("08:00"),
+                end: time("09:30"),
+                weekday: Weekday.Monday,
                 visible: true
               }
             ],
             practices: [
               {
-                group: 1,
                 id: 2,
+                group: 1,
                 fullname: "Software Engineering Übung",
                 shortname: "SE Ü",
                 professor: "Riedhammer",
                 room: "HQ205",
-                start: new Date("2019-03-11T14:00:00"),
-                end: new Date("2019-03-11T15:30:00"),
-                weekday: 1,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Monday,
                 visible: true
               },
               {
-                group: 2,
                 id: 3,
+                group: 2,
                 fullname: "Software Engineering Übung",
                 shortname: "SE Ü",
                 professor: "Riedhammer",
                 room: "HQ205",
-                start: new Date("2019-03-13T08:00:00"),
-                end: new Date("2019-03-13T09:30:00"),
-                weekday: 3,
+                start: time("08:00"),
+                end: time("09:30"),
+                weekday: Weekday.Wednesday,
                 visible: false
               },
               {
-                group: 3,
                 id: 4,
+                group: 3,
                 fullname: "Software Engineering Übung",
                 shortname: "SE Ü",
                 professor: "Riedhammer",
                 room: "HQ205",
-                start: new Date("2019-03-14T14:00:00"),
-                end: new Date("2019-03-14T15:30:00"),
-                weekday: 4,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Thursday,
                 visible: false
               }
             ]
@@ -79,9 +81,9 @@ export const fakeOptimalCourses: Array<Course> = [
                 shortname: "Math II",
                 professor: "Scherr",
                 room: "HW307",
-                start: new Date("2019-03-12T11:30:00"),
-                end: new Date("2019-03-12T13:00:00"),
-                weekday: 2,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Tuesday,
                 visible: true
               },
               {
@@ -90,35 +92,35 @@ export const fakeOptimalCourses: Array<Course> = [
                 shortname: "Math II",
                 professor: "Scherr",
                 room: "HQ105",
-                start: new Date("2019-03-14T11:30:00"),
-                end: new Date("2019-03-14T13:00:00"),
-                weekday: 4,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Thursday,
                 visible: true
               }
             ],
             practices: [
               {
-                group: 1,
                 id: 7,
+                group: 1,
                 fullname: "Mathematik II Übung",
                 shortname: "Math II Ü",
                 professor: "Scherr",
                 room: "HQ209",
-                start: new Date("2019-03-11T14:00:00"),
-                end: new Date("2019-03-11T15:30:00"),
-                weekday: 1,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Monday,
                 visible: false
               },
               {
-                group: 2,
                 id: 8,
+                group: 2,
                 fullname: "Mathematik II Übung",
                 shortname: "Math II Ü",
                 professor: "Scherr",
                 room: "HQ305",
-                start: new Date("2019-03-14T14:00:00"),
-                end: new Date("2019-03-14T15:30:00"),
-                weekday: 4,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Thursday,
                 visible: true
               }
             ]
@@ -133,9 +135,9 @@ export const fakeOptimalCourses: Array<Course> = [
                 shortname: "Prog II",
                 professor: "Götzelmann",
                 room: "HQ013",
-                start: new Date("2019-03-11T15:45:00"),
-                end: new Date("2019-03-11T17:15:00"),
-                weekday: 1,
+                start: time("15:45"),
+                end: time("17:15"),
+                weekday: Weekday.Monday,
                 visible: true
               },
               {
@@ -144,59 +146,59 @@ export const fakeOptimalCourses: Array<Course> = [
                 shortname: "Prog II",
                 professor: "Götzelmann",
                 room: "HW307",
-                start: new Date("2019-03-15T11:30:00"),
-                end: new Date("2019-03-15T13:00:00"),
-                weekday: 5,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Friday,
                 visible: true
               }
             ],
             practices: [
               {
+                id: 13,
                 group: 1,
-                id: 11,
                 fullname: "Programmieren II Übung",
                 shortname: "Prog II Ü",
                 professor: "Götzelmann",
                 room: "HQ205",
-                start: new Date("2019-03-11T11:30:00"),
-                end: new Date("2019-03-11T13:00:00"),
-                weekday: 1,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Monday,
                 visible: true
               },
               {
+                id: 11,
                 group: 2,
+                fullname: "Programmieren II Übung",
+                shortname: "Prog II Ü",
+                professor: "Götzelmann",
+                room: "HQ211",
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Friday,
+                visible: false
+              },
+              {
                 id: 12,
-                fullname: "Programmieren II Übung",
-                shortname: "Prog II Ü",
-                professor: "Götzelmann",
-                room: "HQ211",
-                start: new Date("2019-03-15T09:45:00"),
-                end: new Date("2019-03-15T11:15:00"),
-                weekday: 5,
-                visible: false
-              },
-              {
                 group: 3,
-                id: 13,
                 fullname: "Programmieren II Übung",
                 shortname: "Prog II Ü",
                 professor: "Götzelmann",
                 room: "HQ211",
-                start: new Date("2019-03-15T14:00:00"),
-                end: new Date("2019-03-15T15:30:00"),
-                weekday: 5,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Friday,
                 visible: false
               },
               {
+                id: 13,
                 group: 4,
-                id: 14,
                 fullname: "Programmieren II Übung",
                 shortname: "Prog II Ü",
                 professor: "Hartmann",
                 room: "HQ205",
-                start: new Date("2019-03-15T14:00:00"),
-                end: new Date("2019-03-15T15:30:00"),
-                weekday: 5,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Friday,
                 visible: false
               }
             ]
@@ -206,63 +208,63 @@ export const fakeOptimalCourses: Array<Course> = [
             name: "Theoretische Informatik",
             lectures: [
               {
-                id: 15,
+                id: 14,
                 fullname: "Theoretische Informatik",
                 shortname: "TI",
                 professor: "Kröner",
                 room: "HQ013",
-                start: new Date("2019-03-12T15:45:00"),
-                end: new Date("2019-03-12T17:15:00"),
-                weekday: 2,
+                start: time("15:45"),
+                end: time("17:15"),
+                weekday: Weekday.Tuesday,
                 visible: true
               },
               {
-                id: 16,
+                id: 15,
                 fullname: "Theoretische Informatik",
                 shortname: "TI",
                 professor: "Kröner",
                 room: "HW307",
-                start: new Date("2019-03-13T11:30:00"),
-                end: new Date("2019-03-13T13:00:00"),
-                weekday: 3,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Wednesday,
                 visible: true
               }
             ],
             practices: [
               {
+                id: 16,
                 group: 1,
-                id: 17,
                 fullname: "Theoretische Informatik Übung",
                 shortname: "TI Ü",
                 professor: "Kröner",
                 room: "HQ305",
-                start: new Date("2019-03-12T14:00:00"),
-                end: new Date("2019-03-12T15:30:00"),
-                weekday: 2,
+                start: time("14:00"),
+                end: time("15:30"),
+                weekday: Weekday.Tuesday,
                 visible: true
               },
               {
+                id: 17,
                 group: 1,
-                id: 18,
                 fullname: "Theoretische Informatik Übung",
                 shortname: "TI Ü",
                 professor: "Kröner",
                 room: "HQ406",
-                start: new Date("2019-03-14T09:45:00"),
-                end: new Date("2019-03-14T11:15:00"),
-                weekday: 4,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Thursday,
                 visible: false
               },
               {
+                id: 18,
                 group: 1,
-                id: 19,
                 fullname: "Theoretische Informatik Übung",
                 shortname: "TI Ü",
                 professor: "Kröner",
                 room: "HQ306",
-                start: new Date("2019-03-15T09:45:00"),
-                end: new Date("2019-03-15T11:15:00"),
-                weekday: 5,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Friday,
                 visible: false
               }
             ]
@@ -273,99 +275,99 @@ export const fakeOptimalCourses: Array<Course> = [
             lectures: [],
             practices: [
               {
+                id: 19,
                 group: 3,
-                id: 20,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Raimond",
                 room: "HW209",
-                start: new Date("2019-03-11T09:45:00"),
-                end: new Date("2019-03-11T11:15:00"),
-                weekday: 1,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Monday,
                 visible: false
               },
               {
+                id: 20,
                 group: 3,
-                id: 21,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Raimond",
                 room: "HQ406",
-                start: new Date("2019-03-15T08:00:00"),
-                end: new Date("2019-03-15T09:30:00"),
-                weekday: 5,
+                start: time("08:00"),
+                end: time("09:30"),
+                weekday: Weekday.Friday,
                 visible: false
               },
               {
+                id: 42,
                 group: 2,
-                id: 22,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Coleman",
                 room: "HQ306",
-                start: new Date("2019-03-11T09:45:00"),
-                end: new Date("2019-03-11T11:15:00"),
-                weekday: 1,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Monday,
                 visible: true
               },
               {
+                id: 21,
                 group: 1,
-                id: 23,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Coleman",
                 room: "HQ407",
-                start: new Date("2019-03-11T11:30:00"),
-                end: new Date("2019-03-11T13:00:00"),
-                weekday: 1,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Monday,
                 visible: false
               },
               {
+                id: 22,
                 group: 4,
-                id: 24,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Raimond",
                 room: "HQ405",
-                start: new Date("2019-03-11T11:30:00"),
-                end: new Date("2019-03-11T13:00:00"),
-                weekday: 1,
+                start: time("11:30"),
+                end: time("13:00"),
+                weekday: Weekday.Monday,
                 visible: false
               },
               {
+                id: 23,
                 group: 2,
-                id: 25,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Coleman",
                 room: "HQ306",
-                start: new Date("2019-03-12T09:45:00"),
-                end: new Date("2019-03-12T11:15:00"),
-                weekday: 2,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Tuesday,
                 visible: true
               },
               {
+                id: 24,
                 group: 1,
-                id: 26,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Coleman",
                 room: "HQ110",
-                start: new Date("2019-03-13T09:45:00"),
-                end: new Date("2019-03-13T11:15:00"),
-                weekday: 3,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Wednesday,
                 visible: false
               },
               {
+                id: 25,
                 group: 4,
-                id: 27,
                 fullname: "Englisch III/IV",
                 shortname: "Engl",
                 professor: "Raimond",
                 room: "HQ305",
-                start: new Date("2019-03-13T09:45:00"),
-                end: new Date("2019-03-13T11:15:00"),
-                weekday: 3,
+                start: time("09:45"),
+                end: time("11:15"),
+                weekday: Weekday.Wednesday,
                 visible: false
               }
             ]
@@ -400,27 +402,27 @@ export const fakeOptimalCourses: Array<Course> = [
     ]
   },
   {
-    id: 8,
+    id: 2,
     name: "Bachelor Wirtschaftsinformatik",
     semesters: []
   },
   {
-    id: 9,
+    id: 3,
     name: "Bachelor Medieninformatik",
     semesters: []
   },
   {
-    id: 10,
+    id: 4,
     name: "Master Informatik",
     semesters: []
   },
   {
-    id: 11,
+    id: 5,
     name: "Master Wirtschaftsinformatik",
     semesters: []
   },
   {
-    id: 12,
+    id: 6,
     name: "Master Medieninformatik",
     semesters: []
   }
