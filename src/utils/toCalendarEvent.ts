@@ -17,7 +17,6 @@ export const toCalendarEvent = (
 
 const addDefaultDate = (date: Date, weekday: Weekday) => {
   return moment(date)
-    .year(2019)
     .month(3)
     .date(1)
     .add(weekday - 1, "days")
