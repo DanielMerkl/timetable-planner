@@ -7,11 +7,11 @@ export const fakeCoursesData: Array<Course> = [
     id: 1,
     name: "Bachelor Informatik",
     semesters: [
-      {
-        id: 1,
-        number: 1,
-        modules: []
-      },
+      // {
+      //   id: 1,
+      //   number: 1,
+      //   modules: []
+      // },
       {
         id: 44,
         number: 2,
@@ -374,56 +374,56 @@ export const fakeCoursesData: Array<Course> = [
           }
         ]
       },
-      {
-        id: 3,
-        number: 3,
-        modules: []
-      },
-      {
-        id: 4,
-        number: 4,
-        modules: []
-      },
-      {
-        id: 5,
-        number: 5,
-        modules: []
-      },
-      {
-        id: 6,
-        number: 6,
-        modules: []
-      },
-      {
-        id: 7,
-        number: 7,
-        modules: []
-      }
+      // {
+      //   id: 3,
+      //   number: 3,
+      //   modules: []
+      // },
+      // {
+      //   id: 4,
+      //   number: 4,
+      //   modules: []
+      // },
+      // {
+      //   id: 5,
+      //   number: 5,
+      //   modules: []
+      // },
+      // {
+      //   id: 6,
+      //   number: 6,
+      //   modules: []
+      // },
+      // {
+      //   id: 7,
+      //   number: 7,
+      //   modules: []
+      // }
     ]
   },
-  {
-    id: 2,
-    name: "Bachelor Wirtschaftsinformatik",
-    semesters: []
-  },
-  {
-    id: 3,
-    name: "Bachelor Medieninformatik",
-    semesters: []
-  },
-  {
-    id: 4,
-    name: "Master Informatik",
-    semesters: []
-  },
-  {
-    id: 5,
-    name: "Master Wirtschaftsinformatik",
-    semesters: []
-  },
-  {
-    id: 6,
-    name: "Master Medieninformatik",
-    semesters: []
-  }
+  // {
+  //   id: 2,
+  //   name: "Bachelor Wirtschaftsinformatik",
+  //   semesters: []
+  // },
+  // {
+  //   id: 3,
+  //   name: "Bachelor Medieninformatik",
+  //   semesters: []
+  // },
+  // {
+  //   id: 4,
+  //   name: "Master Informatik",
+  //   semesters: []
+  // },
+  // {
+  //   id: 5,
+  //   name: "Master Wirtschaftsinformatik",
+  //   semesters: []
+  // },
+  // {
+  //   id: 6,
+  //   name: "Master Medieninformatik",
+  //   semesters: []
+  // }
 ];
